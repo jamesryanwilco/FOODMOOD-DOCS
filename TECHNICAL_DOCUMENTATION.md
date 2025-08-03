@@ -26,6 +26,8 @@ The `src` directory is organized to separate concerns and improve maintainabilit
 -   **RevenueCat**: The app uses RevenueCat for in-app subscription management.
     -   **Paywalls**: The `PremiumScreen.js` uses the `<RevenueCatUI.Paywall />` component from the `react-native-purchases-ui` library to display a remotely configurable paywall. This allows for rapid iteration and A/B testing from the RevenueCat dashboard without needing to ship a new app version.
     -   **Webhook**: A Supabase Edge Function (`/supabase/functions/revenuecat-webhook`) serves as a secure webhook to receive subscription status updates from RevenueCat, ensuring the user's `is_premium` status in the `profiles` table is always up-to-date.
+    -   **Premium Status Hook (`usePremiumStatus.js`)**: A custom hook that fetches the user's premium status from their Supabase profile. It includes a simple in-memory cache to avoid redundant database calls as the user navigates through the app.
+    -   **Usage Limiting Hook (`useImageAnalysisUsage.js`)**: A custom hook to control feature usage and manage costs. It uses `AsyncStorage` to track the number of times a feature (like AI Image Analysis) is used per day, automatically resetting the count at midnight.
 
 ---
 

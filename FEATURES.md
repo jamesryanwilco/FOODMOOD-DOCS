@@ -50,6 +50,11 @@ This document tracks the development status of the app's core features.
         -   **Energy Plot:** Dual-line chart for "Energy Before" vs. "Energy After."
         -   **Hunger & Fullness Plot:** Dual-line chart for "Hunger Before" vs. "Fullness After."
         -   **How You Eat Plot:** Dual-line chart for "Mindfulness" vs. "Eating Speed."
+    -   [✅] **AI Meal Analysis (Premium):**
+        -   Users can analyze a meal by taking a photo or selecting one from their library.
+        -   The feature is restricted to premium users and has a daily usage limit to manage costs.
+        -   Provides a detailed breakdown: description, ingredients, rainbow analysis, and macronutrient estimates.
+        -   This AI-generated data is now integrated into the main AI Insights analysis for richer, more detailed patterns.
 -   **UI & Animations:**
     -   [✅] Added a continuous, smooth spinning animation to the main Check-In wheel.
     -   [✅] Refined UI layouts for better alignment and visual appeal across multiple screens.

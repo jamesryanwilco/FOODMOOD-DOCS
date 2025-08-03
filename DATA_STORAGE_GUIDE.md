@@ -1,16 +1,14 @@
 # 💾 Data Storage Guide
 
-This document provides a complete reference for all data stored in the user's local device via **AsyncStorage**.
+This document provides a complete reference for all data stored in the application, including the Supabase cloud database and the user's local device via **AsyncStorage**.
 
 ---
 
-## 1. Primary Data Key: `pending_entries`
+## 1. Supabase Cloud Storage (`entries` Table)
 
-All user-generated check-in data is stored under a single key in AsyncStorage: `pending_entries`. This key holds a stringified JSON array of "entry" objects. Each object represents a single meal check-in.
+With the introduction of user accounts, all user-generated check-in data is now stored in a central `entries` table in the Supabase database. This allows for cross-device syncing. The `DatabaseService.js` file handles the mapping between the database's `snake_case` columns and the app's `camelCase` state.
 
 ### The Entry Object Structure
-
-Below is the complete structure of a single entry object, detailing each property, where it is set, and where it is used.
 
 | Property | Type | Set In | Description | Used In |
 | :--- | :--- | :--- | :--- | :--- |
@@ -37,13 +35,17 @@ Below is the complete structure of a single entry object, detailing each propert
 | **`emotionsAfter`** | `Array<String>` | `Phase2_Step1a_EmotionScreen.js` / `Phase2_Step1ba_MoodMeterScreen.js` | The user's selected emotions **after** eating. | **Entries:** "After" mood display.<br>**Insights:** "After" value for "Common Mood Shifts" analysis. |
 | **`goalAligned`** | `Boolean` | `Phase2_Step2_GoalScreen.js` | Whether the user felt the meal aligned with their goals. | *(Not currently used in UI)* |
 | **`phase2_completed_at`**| `String` | `CheckInContext.js` (in `completeCheckIn`) | The ISO string of when the user finished the entire entry. | **Entries:** Sorting and grouping completed entries by week. |
+| | | | | |
+| **AI Analysis Data** | | | *(Collected from the AI Image Analysis feature)* | |
+| **`aiAnalysis`** | `Object` | `AIAnalysisScreen.js` | An object containing the full analysis from the AI. This entire object is `null` if the user did not perform an analysis. | **Insights:** The nested properties are sent to the AI Insights engine for deeper pattern recognition. |
 
 ---
 
-## 2. Other Data Keys
+## 2. AsyncStorage Keys
+
+AsyncStorage is still used for non-critical, client-side data.
 
 | Key | Set In | Description |
 | :--- | :--- | :--- |
 | **`hasOnboarded`** | `OnboardingScreen.js` | A simple boolean flag (`'true'`) set after the user completes the initial onboarding flow. Used in `App.js` to determine the initial route. |
-| **`userId`** | `OnboardingScreen.js` | A UUIDv4 generated for analytics purposes to anonymously identify the user. Sent to Segment. |
-| **`goals`** | `SelectGoalsScreen.js` / `GoalsScreen.js` | A stringified JSON array of the user's selected long-term goals. | 
+| **`image_analysis_usage`**| `useImageAnalysisUsage.js` | A stringified JSON object (e.g., `{ "date": "2023-08-03", "count": 1 }`) that tracks the number of times the user has used the AI Image Analysis feature per day. It is used to enforce the daily usage limit. | 

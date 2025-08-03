@@ -21,10 +21,21 @@ The backend is designed with a modern, hybrid approach, combining a custom Node.
 -   **Purpose:** The primary role of this server is to act as a **secure proxy** for the OpenAI API. It exposes two endpoints that the mobile app communicates with:
     -   `/api/chat`: Handles requests for the "AwareAI" chatbot.
     -   `/api/insights`: Handles requests for the AI-powered analysis of user entries.
+    -   `/api/analyze-image`: Handles requests for the AI-powered analysis of meal images. For a detailed guide on this feature, see [AI Image Analysis: Setup and Architecture Guide](./AI_IMAGE_ANALYSIS_SETUP.md).
 -   **Security:** This server securely stores the `OPENAI_API_KEY` as an environment variable. By acting as a middleman, it ensures that this secret key is **never** exposed on the client-side mobile application.
 -   **Deployment:** The server is deployed as a serverless function on **Vercel**.
     -   **Configuration:** A `vercel.json` file within the `/backend` directory configures the build process and routing.
-    -   **Deployment Command:** `vercel --prod` from the project root.
+    -   **Deployment Workflow:**
+        1.  **Commit Changes:** Before deploying, ensure all your changes are committed to Git.
+            ```bash
+            git add .
+            git commit -m "Your descriptive commit message"
+            git push
+            ```
+        2.  **Deploy to Production:** Run the following command from the project root.
+            ```bash
+            vercel --prod
+            ```
 
 ### 2.2. Supabase (Backend-as-a-Service)
 
